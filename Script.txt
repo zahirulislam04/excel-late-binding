@@ -1,0 +1,24 @@
+Private Sub btnExport_Click()
+    On Error GoTo Err
+    Me.sfrmCandidateSearch.SetFocus
+
+    DoCmd.RunCommand acCmdSelectAllRecords
+    DoCmd.RunCommand acCmdCopy
+
+    Dim xlapp As Object
+    Set xlapp = CreateObject("Excel.Application")
+    With xlapp
+    .Workbooks.Add
+
+    .ActiveSheet.PasteSpecial
+    .Cells.Select
+    .Selection.RowHeight = 30
+    .Cells.EntireColumn.AutoFit
+    .Visible = True
+    .Range("a1").Select
+    End With
+    
+    Exit Sub
+Err:
+    MsgBox Error$
+End Sub
